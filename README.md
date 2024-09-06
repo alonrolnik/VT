@@ -1,4 +1,4 @@
-High level design
+High-level design
 
 ![image](https://github.com/user-attachments/assets/afdf8312-26de-4b6c-99a0-2859b1dee915)
 
@@ -20,10 +20,11 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
 
 2. **Backend**
    - **API Gateway:** Manages incoming requests, routes them to the appropriate services, and provides API access for third-party integrations.
-   - **File Processing Service:** Handles file uploads, runs virus scans, and extracts metadata.
+   - **File Processing and API Service:** Handles file uploads and API, distributing the work to the scanners.
+   - **Scanners:** Linux/Microsoft Containers that scan the files, upload them to the object store, and save the scan metadata results to the DB.
    - **Task Queue:** Uses Celery with RabbitMQ to manage and distribute file scanning tasks.
    - **Result Storage Service:** Stores scan results and metadata in a scalable database.
-   - **Statistics Service:** Tracks system metrics, user activity, and scan statistics, eg Grafana cloud.
+   - **Statistics Service:** Using Grafana cloud as a holistic solution, tracks system metrics, user activity, and scan statistics.
 
 3. **Data Storage**
    - **Metadata Storage:** SQL database (e.g., PostgreSQL) for storing structured data like scan results, user data, and scan history.
@@ -40,9 +41,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
 
 #### **b. Workflow**
 1. **File/URL Submission:**
-   - A user uploads a file or submits a URL via the frontend.
-   - The frontend sends the file/URL to the API Gateway.
-
+   - A user uploads a file or submits a URL via the FE or the API to the API gateway.
 2. **Task Distribution:**
    - The API Gateway forwards the file/URL to the File Processing Service.
    - The File Processing Service pushes the task into the RabbitMQ queue.
@@ -52,7 +51,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
    - Results are stored in the database, and files are stored in object storage.
 
 4. **Result Retrieval:**
-   - The user can query the scan results via the frontend or the API.
+   - The user can query the scan results via the FE or the API.
    - Cached results are served quickly from Redis if available.
 
 ### **3. Data Storage and Management**
@@ -84,7 +83,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
    - Use redundant servers for the backend and Celery workers to ensure no single point of failure.
 
 2. **Task Reprocessing:**
-   - If a scan task fails, it is re-queued for processing. Celery workers can retry tasks a specified number of times before flagging them as failed.
+   - If a scan task fails, it is re-queued for processing. Celery workers can retry tasks a specified number of times before flagging them as failed, after the threshold, they can be stored in DLQ.
 
 3. **Circuit Breaker Pattern:**
    - Implement circuit breakers in the API Gateway to prevent cascading failures when external services (e.g., VirusTotal API) are down.
@@ -132,7 +131,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
 
 #### **b. Authentication**
 - **User Authentication:** JWT for session management.
-- **API Key Management:** OAuth2 for third-party API access. Each application using the API must be registered and issued an API key.
+- **API Key Management:** Auth0 for third-party API access. Each application using the API must be registered and issued an API key.
 
 ### **7. Sample API Request/Response**
 
