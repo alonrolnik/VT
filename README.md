@@ -14,7 +14,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
 ### **2. System Architecture Overview**
 
 #### **a. Components**
-1. **Frontend (Not my expertise)**
+1. **Frontend**
    - **Purpose:** User interface for uploading files, viewing results, and managing user accounts.
    - **Technology:** React.js or Angular for the web app, native or cross-platform (Flutter/React Native) for mobile apps.
 
