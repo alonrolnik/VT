@@ -1,6 +1,6 @@
 High-level design
 
-![image](https://github.com/user-attachments/assets/c4bb6da3-f20a-427e-bcb4-018272270c15)
+![image](https://github.com/user-attachments/assets/95ff70e8-51fd-4276-b670-1877c11adf6c)
 
 
 
