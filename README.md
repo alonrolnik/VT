@@ -1,7 +1,6 @@
 High-level design
 
-![image](https://github.com/user-attachments/assets/afdf8312-26de-4b6c-99a0-2859b1dee915)
-
+![image](https://github.com/user-attachments/assets/3bd74f03-9d56-4e02-939a-7f0e1bf29ca1)
 
 
 
@@ -21,6 +20,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
 2. **Backend**
    - **API Gateway:** Manages incoming requests, routes them to the appropriate services, and provides API access for third-party integrations.
    - **File Processing and API Service:** Handles file uploads and API, distributing the work to the scanners.
+   - **Vulnerabilties API service**: aggragation of all the vendors and their findings per file/URL, adding/updating a new vendor is easy and requires only updating the DB.
    - **Scanners:** Linux/Microsoft Containers that scan the files, upload them to the object store, and save the scan metadata results to the DB.
    - **Task Queue:** Uses Celery with RabbitMQ to manage and distribute file scanning tasks.
    - **Result Storage Service:** Stores scan results and metadata in a scalable database.
