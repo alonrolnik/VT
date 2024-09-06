@@ -20,7 +20,7 @@ VirusTotal allows users to upload files and URLs to scan them for malware using 
 2. **Backend**
    - **API Gateway:** Manages incoming requests, routes them to the appropriate services, and provides API access for third-party integrations.
    - **File Processing and API Service:** Handles file uploads and API, distributing the work to the scanners.
-   - **metadata scripts folder**: a shared folder of all the vendors and their scripts, adding/updating a new vendor is easy and requires only updating the folder, this folder is mounted by the scanners.
+   - **metadata scripts folder**: a shared folder per OS of all the vendors and their scripts, adding/updating a new vendor is easy and requires only updating the files folder, this folder is mounted by the scanners.
    - **Scanners:** Linux/Microsoft Containers that scan the files, upload them to the object store, and save the scan metadata results to the DB.
    - **Task Queue:** Uses Celery with RabbitMQ to manage and distribute file scanning tasks.
    - **Result Storage Service:** Stores scan results and metadata in a scalable database.
